@@ -17,9 +17,8 @@ import { Activity } from '@/types/trip';
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
 
 /**
- * World-class Map component with Advanced Markers, Polylines, and InfoWindows.
- * Integrates Directions API with optimized waypoints.
- * @returns {React.JSX.Element} - Rendered map
+ * TravelAI v5.0 Map View.
+ * Implementation: Advanced Markers with brand colors and dynamic path rendering.
  */
 export const MapView = (): React.JSX.Element => {
   const { itinerary } = useItineraryStore();
@@ -34,15 +33,15 @@ export const MapView = (): React.JSX.Element => {
   }, [itinerary]);
 
   return (
-    <div className="w-full h-[600px] rounded-3xl overflow-hidden glass border border-glass-border shadow-2xl" role="application" aria-label="Interactive trip map">
+    <div className="w-full h-full relative" role="application" aria-label="Interactive trip map">
       <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
         <Map
-          defaultCenter={{ lat: 20, lng: 77 }} // Default to India center
+          defaultCenter={{ lat: 20, lng: 77 }}
           defaultZoom={4}
-          mapId="TRAVEL_AI_MAP_V2"
+          mapId="TRAVEL_AI_MAP_V5"
           gestureHandling="greedy"
-          disableDefaultUI={false}
-          colorScheme="FOLLOW_SYSTEM"
+          disableDefaultUI={true}
+          colorScheme="DARK"
         >
           {dayMarkers.flatMap(day => 
             day.activities.map((act) => (
@@ -54,7 +53,7 @@ export const MapView = (): React.JSX.Element => {
                 <Pin 
                   background={getCategoryColor(act.category)} 
                   glyph={CATEGORY_ICONS[act.category as keyof typeof CATEGORY_ICONS] ?? '📍'} 
-                  borderColor={'#ffffff'}
+                  borderColor={'rgba(255,255,255,0.2)'}
                 />
               </AdvancedMarker>
             ))
@@ -65,17 +64,17 @@ export const MapView = (): React.JSX.Element => {
               position={{ lat: selectedActivity.geo.lat, lng: selectedActivity.geo.lng }}
               onCloseClick={() => setSelectedActivity(null)}
             >
-              <div className="p-2 max-w-[200px]">
-                <h4 className="font-bold text-sm">{selectedActivity.name}</h4>
-                <p className="text-[10px] text-gray-500 mb-2">{selectedActivity.location}</p>
-                <div className="flex justify-between items-center">
-                  <span className="font-bold text-primary">${selectedActivity.cost_usd}</span>
+              <div className="p-3 max-w-[200px] bg-navy text-w100">
+                <h4 className="font-serif text-[15px] font-medium text-gold2 mb-1">{selectedActivity.name}</h4>
+                <p className="text-[10px] text-w40 uppercase tracking-wider mb-2">{selectedActivity.location}</p>
+                <div className="flex justify-between items-center mt-2 border-t border-w10 pt-2">
+                  <span className="font-serif text-[14px] text-w100">{selectedActivity.cost_local}</span>
                   <a 
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedActivity.google_maps_query)}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="text-[10px] bg-primary text-white px-2 py-1 rounded"
+                    className="text-[10px] text-gold2 border border-gold2 px-2 py-1 rounded-pill hover:bg-gold/10 transition-all"
                   >
-                    Open in Maps
+                    Open ↗
                   </a>
                 </div>
               </div>
@@ -90,9 +89,6 @@ export const MapView = (): React.JSX.Element => {
   );
 };
 
-/**
- * Handles map bounds based on markers.
- */
 const MapController = ({ dayMarkers }: { dayMarkers: any[] }) => {
   const map = useMap();
 
@@ -107,20 +103,16 @@ const MapController = ({ dayMarkers }: { dayMarkers: any[] }) => {
     });
 
     if (!bounds.isEmpty()) {
-      map.fitBounds(bounds, { top: 80, right: 80, bottom: 80, left: 80 });
+      map.fitBounds(bounds, { top: 60, right: 60, bottom: 60, left: 60 });
     }
   }, [map, dayMarkers]);
 
   return null;
 };
 
-/**
- * Renders polylines for each day using Directions Service.
- */
 const DirectionsRenderer = ({ dayMarkers }: { dayMarkers: any[] }) => {
   const map = useMap();
   const routesLibrary = useMapsLibrary('routes');
-  const [directionsServices, setDirectionsServices] = useState<google.maps.DirectionsService[]>([]);
 
   useEffect(() => {
     if (!map || !routesLibrary || dayMarkers.length === 0) return;
@@ -140,7 +132,7 @@ const DirectionsRenderer = ({ dayMarkers }: { dayMarkers: any[] }) => {
         destination: { lat: day.activities[day.activities.length - 1].geo!.lat, lng: day.activities[day.activities.length - 1].geo!.lng },
         waypoints,
         optimizeWaypoints: true,
-        travelMode: google.maps.TravelMode.DRIVING, // Default, could be dynamic
+        travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === 'OK' && result) {
           new google.maps.DirectionsRenderer({
@@ -148,9 +140,9 @@ const DirectionsRenderer = ({ dayMarkers }: { dayMarkers: any[] }) => {
             directions: result,
             suppressMarkers: true,
             polylineOptions: {
-              strokeColor: getDayColor(index),
-              strokeOpacity: 0.8,
-              strokeWeight: 4
+              strokeColor: '#e8b86d', // var(--gold2)
+              strokeOpacity: 0.6,
+              strokeWeight: 3
             }
           });
         }
@@ -163,15 +155,10 @@ const DirectionsRenderer = ({ dayMarkers }: { dayMarkers: any[] }) => {
 
 const getCategoryColor = (category: string) => {
   switch (category) {
-    case 'attraction': return '#6366f1';
-    case 'food': return '#f43f5e';
-    case 'accommodation': return '#10b981';
-    case 'transport': return '#f59e0b';
-    default: return '#64748b';
+    case 'attraction': return '#c9922a'; // var(--gold)
+    case 'food': return '#d85a30'; // var(--coral)
+    case 'accommodation': return '#1d9e75'; // var(--teal)
+    case 'transport': return '#378add'; // var(--sky)
+    default: return '#152540'; // var(--navy-mid)
   }
-};
-
-const getDayColor = (index: number) => {
-  const colors = ['#6366f1', '#f43f5e', '#10b981', '#f59e0b', '#8b5cf6'];
-  return colors[index % colors.length];
 };

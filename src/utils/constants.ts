@@ -15,8 +15,9 @@ export const DEBOUNCE_DELAY_MS = 350;
 export const CATEGORY_ICONS = {
   attraction: '🏛',
   food: '🍽',
-  hotel: '🏨',
-  transit: '🚌',
+  accommodation: '🏨',
+  transport: '🚌',
+  leisure: '🎭',
 } as const;
 
 export const API_ENDPOINTS = {

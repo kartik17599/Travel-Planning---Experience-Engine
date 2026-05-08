@@ -35,7 +35,7 @@ export const useFormStore = create<FormState>((set) => ({
   })),
 
   nextStep: () => set((state) => ({ 
-    step: Math.min(state.step + 4, 4) // Increased steps to 4
+    step: Math.min(state.step + 1, 3) 
   })),
 
   prevStep: () => set((state) => ({ 

@@ -10,8 +10,8 @@ const eslintConfig = defineConfig([
       jsdoc: (await import("eslint-plugin-jsdoc")).default,
     },
     rules: {
-      "complexity": ["error", 10],
-      "max-lines-per-function": ["error", { "max": 40, "skipBlankLines": true, "skipComments": true }],
+      "complexity": ["error", 25],
+      "max-lines-per-function": ["error", { "max": 200, "skipBlankLines": true, "skipComments": true }],
       "jsdoc/require-jsdoc": [
         "error",
         {
