@@ -6,12 +6,16 @@ import { CATEGORY_ICONS } from '@/utils/constants';
 import styles from './ActivityItem.module.css';
 
 interface ActivityItemProps {
+  /** The specific travel activity data to display */
   activity: Activity;
 }
 
 /**
  * TravelAI v5.0 Activity Card.
  * Implementation: Minimalist luxury card with refined typography and subtle accents.
+ * Optimized with React.memo for high-performance timeline rendering.
+ * @param {ActivityItemProps} props - Component properties
+ * @returns {React.JSX.Element} - The rendered activity card
  */
 export const ActivityItem = React.memo(({ activity }: ActivityItemProps): React.JSX.Element => {
   return (

@@ -9,6 +9,7 @@ import { TripItinerary } from '@/types/trip';
  * TravelAI v5.0 Itinerary Panel.
  * Implementation: Scrollable editorial panel with quick-action chips 
  * and conversational follow-up.
+ * @returns {React.JSX.Element} - The rendered itinerary results panel
  */
 export const ItineraryDisplay = (): React.JSX.Element => {
   const { itinerary, streamedContent, isGenerating } = useItineraryStore();
@@ -24,7 +25,10 @@ export const ItineraryDisplay = (): React.JSX.Element => {
     return () => clearInterval(interval);
   }, [isGenerating]);
 
-  const it = useMemo(() => {
+  /**
+   * Memoized itinerary object parsed from streamed string content or store state.
+   */
+  const it = useMemo((): TripItinerary | null => {
     if (itinerary) return itinerary;
     if (!streamedContent) return null;
     try {
@@ -32,7 +36,9 @@ export const ItineraryDisplay = (): React.JSX.Element => {
       if (jsonStr.startsWith('{') && jsonStr.endsWith('}')) {
         return JSON.parse(jsonStr) as TripItinerary;
       }
-    } catch (e) { return null; }
+    } catch (e) { 
+      return null; 
+    }
     return null;
   }, [itinerary, streamedContent]);
 
@@ -128,6 +134,12 @@ export const ItineraryDisplay = (): React.JSX.Element => {
   );
 };
 
+/**
+ * A small pill-shaped button for quick itinerary follow-up queries.
+ * @param {object} props - Component properties
+ * @param {string} props.label - The chip text
+ * @returns {React.JSX.Element} - The rendered quick chip
+ */
 const QuickChip = ({ label }: { label: string }) => (
   <button className="whitespace-nowrap border border-w10 rounded-pill px-3 py-1.5 text-[11px] text-w40 hover:border-w20 hover:text-w70 transition-all">
     {label}

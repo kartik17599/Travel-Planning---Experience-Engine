@@ -17,6 +17,7 @@ const PACE_OPTIONS = [
 /**
  * TravelAI v5.0 Planner Panel.
  * Implementation: Multi-step editorial form with custom chips and pace selectors.
+ * @returns {React.JSX.Element} - The rendered trip planner form
  */
 export const TripForm = (): React.JSX.Element => {
   const { formData, step, setFormData, nextStep, prevStep } = useFormStore();
@@ -33,12 +34,17 @@ export const TripForm = (): React.JSX.Element => {
         const res = await fetch(`${API_ENDPOINTS.PLACES}?input=${encodeURIComponent(formData.destination)}`);
         const data = await res.json();
         setSuggestions(data.predictions || []);
-      } catch (err) { console.error(err); }
+      } catch (err) { console.error('Places lookup failed:', err); }
     }, 350);
     return () => clearTimeout(handler);
   }, [formData.destination]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /**
+   * Handles the final submission of the trip form to the AI engine.
+   * @param {React.FormEvent} e - The form submission event
+   * @returns {Promise<void>}
+   */
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setIsGenerating(true);
     addToHistory('user', `Generate journey for ${formData.destination}`);
@@ -55,10 +61,19 @@ export const TripForm = (): React.JSX.Element => {
         if (done) break;
         appendStreamedContent(new TextDecoder().decode(value));
       }
-    } catch (err) { console.error(err); } finally { setIsGenerating(false); }
+    } catch (err) { 
+      console.error('Stream generation error:', err);
+    } finally { 
+      setIsGenerating(false); 
+    }
   };
 
-  const toggleArrayField = (field: keyof typeof formData, value: string) => {
+  /**
+   * Toggles a value within a multi-select array field in the form state.
+   * @param {keyof typeof formData} field - The form field key to update
+   * @param {string} value - The value to add or remove
+   */
+  const toggleArrayField = (field: keyof typeof formData, value: string): void => {
     const current = (formData[field] as string[]) || [];
     setFormData({ [field]: current.includes(value) ? current.filter(i => i !== value) : [...current, value] });
   };
@@ -241,6 +256,14 @@ export const TripForm = (): React.JSX.Element => {
   );
 };
 
+/**
+ * A reusable form section wrapper with a consistent label style.
+ * @param {object} props - Component properties
+ * @param {string} props.label - The label text
+ * @param {string} props.id - The HTML ID for accessibility
+ * @param {React.ReactNode} props.children - The input elements
+ * @returns {React.JSX.Element} - The rendered form section
+ */
 const FormSection = ({ label, id, children }: { label: string; id: string; children: React.ReactNode }) => (
   <div className="relative mb-4">
     <label htmlFor={id} className="form-label mb-2 block">{label}</label>
@@ -248,6 +271,15 @@ const FormSection = ({ label, id, children }: { label: string; id: string; child
   </div>
 );
 
+/**
+ * A selectable chip button used for interest and preference toggles.
+ * @param {object} props - Component properties
+ * @param {string} props.label - The chip text
+ * @param {boolean} props.selected - Whether the chip is active
+ * @param {Function} props.onClick - Toggle handler
+ * @param {'gold' | 'teal'} props.variant - The color variant matching the design system
+ * @returns {React.JSX.Element} - The rendered chip
+ */
 const Chip = ({ label, selected, onClick, variant }: { label: string; selected: boolean; onClick: () => void; variant: 'gold' | 'teal' }) => (
   <button
     type="button"
@@ -265,6 +297,14 @@ const Chip = ({ label, selected, onClick, variant }: { label: string; selected: 
   </button>
 );
 
+/**
+ * Navigation buttons for multi-step forms.
+ * @param {object} props - Component properties
+ * @param {Function} [props.onBack] - Previous step handler
+ * @param {Function} [props.onNext] - Next step handler
+ * @param {boolean} props.isFinal - Whether this is the last step (triggers submit)
+ * @returns {React.JSX.Element} - The rendered button row
+ */
 const ButtonRow = ({ onBack, onNext, isFinal }: { onBack?: () => void; onNext?: () => void; isFinal: boolean }) => (
   <div className="flex gap-2 mt-4">
     {onBack && (
