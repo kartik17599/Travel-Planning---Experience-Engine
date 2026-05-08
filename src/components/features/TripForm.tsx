@@ -103,7 +103,7 @@ export const TripForm = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto p-8 glass rounded-2xl animate-float">
       <div role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={3} aria-label="Step progress">
         <p className="text-sm font-medium mb-2">Step {step} of 3</p>
         <div className="w-full bg-gray-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">

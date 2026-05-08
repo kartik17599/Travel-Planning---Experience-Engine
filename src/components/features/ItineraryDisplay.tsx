@@ -41,21 +41,34 @@ export const ItineraryDisplay = (): JSX.Element => {
       )}
 
       {itinerary && (
-        <div className="animate-in fade-in duration-500">
-          <header className="mb-6 text-center">
-            <h2 className="text-3xl font-black">{itinerary.destination}</h2>
-            <p className="text-gray-500">
-              {itinerary.startDate} — {itinerary.endDate} | Total Budget: ${itinerary.totalBudget}
-            </p>
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <header className="mb-12 p-12 glass rounded-3xl text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent" />
+            <h2 className="text-5xl font-black tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+              {itinerary.destination}
+            </h2>
+            <div className="flex justify-center items-center gap-4 text-sm font-bold uppercase tracking-widest text-gray-500">
+              <span>📅 {itinerary.startDate}</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full" />
+              <span>🏁 {itinerary.endDate}</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full" />
+              <span className="text-primary">💰 Total: ${itinerary.totalBudget}</span>
+            </div>
           </header>
 
-          <div className="space-y-10">
+          <div className="space-y-12">
             {itinerary.days.map((day) => (
               <section key={day.dayIndex} aria-labelledby={`day-${day.dayIndex}-title`}>
-                <h3 id={`day-${day.dayIndex}-title`} className="text-xl font-bold mb-4 sticky top-0 bg-background/80 backdrop-blur-sm py-2 z-10 border-b border-border">
-                  Day {day.dayIndex} — {day.date}
-                </h3>
-                <div className="space-y-4">
+                <div className="flex items-center gap-4 mb-6 sticky top-[80px] bg-background/90 backdrop-blur-md py-4 z-20">
+                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black shadow-lg">
+                    {day.dayIndex}
+                  </div>
+                  <h3 id={`day-${day.dayIndex}-title`} className="text-2xl font-black tracking-tight">
+                    {day.date}
+                  </h3>
+                  <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
+                </div>
+                <div className="space-y-6 ml-6 border-l-2 border-dashed border-border pl-10 pb-10">
                   {day.activities.map((activity) => (
                     <ActivityItem key={activity.id} activity={activity} />
                   ))}

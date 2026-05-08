@@ -3,38 +3,43 @@
 import React from 'react';
 import { Activity } from '@/types/trip';
 import { CATEGORY_ICONS } from '@/utils/constants';
+import styles from './ActivityItem.module.css';
 
 interface ActivityItemProps {
   activity: Activity;
 }
 
 /**
- * Renders an individual activity card.
- * React.memo used for performance optimization as requested.
+ * Renders an individual activity card with premium styling.
  * @param {ActivityItemProps} props - Component properties
  * @returns {JSX.Element} - Rendered activity
  */
 export const ActivityItem = React.memo(({ activity }: ActivityItemProps): JSX.Element => {
+  const categoryColor = getCategoryColor(activity.category);
+
   return (
-    <div className="flex gap-4 p-4 bg-white dark:bg-slate-800 rounded-lg border border-border shadow-sm mb-3">
-      <div className="text-2xl" aria-hidden="true">
+    <div 
+      className={styles.card} 
+      style={{ '--category-color': categoryColor } as React.CSSProperties}
+    >
+      <div className={styles.iconWrapper} aria-hidden="true" style={{ background: `${categoryColor}20` }}>
         {CATEGORY_ICONS[activity.category]}
       </div>
-      <div className="flex-1">
-        <div className="flex justify-between items-start">
-          <h4 className="font-bold">{activity.name}</h4>
-          <span className="text-sm font-medium text-primary">
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h4 className={styles.title}>{activity.name}</h4>
+          <span className={styles.time} style={{ background: `${categoryColor}20`, color: categoryColor }}>
             {activity.startTime} - {activity.endTime}
           </span>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+        <p className={styles.description}>
           {activity.description}
         </p>
-        <div className="flex justify-between items-center mt-3 pt-3 border-t border-border">
-          <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-            {activity.location.name}
+        <div className={styles.footer}>
+          <span className={styles.location}>
+            📍 {activity.location.name}
           </span>
-          <span className="text-sm font-bold">
+          <span className={styles.cost}>
             ${activity.estimatedCost}
           </span>
         </div>
@@ -42,5 +47,15 @@ export const ActivityItem = React.memo(({ activity }: ActivityItemProps): JSX.El
     </div>
   );
 });
+
+const getCategoryColor = (category: string) => {
+  switch (category) {
+    case 'attraction': return '#6366f1';
+    case 'food': return '#f43f5e';
+    case 'hotel': return '#10b981';
+    case 'transit': return '#f59e0b';
+    default: return '#64748b';
+  }
+};
 
 ActivityItem.displayName = 'ActivityItem';

@@ -23,11 +23,11 @@ export default function Home(): JSX.Element {
         Skip to main content
       </a>
 
-      <header className="py-8 px-6 border-b border-border bg-white dark:bg-slate-900 sticky top-0 z-40">
+      <header className="py-6 px-6 glass sticky top-0 z-40 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-black tracking-tighter text-primary">TravelAI</h1>
-            <p className="text-xs font-medium text-gray-500 uppercase">Premium Travel Engine</p>
+            <h1 className="text-3xl font-black tracking-tighter text-primary">TravelAI</h1>
+            <p className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">Premium Travel Engine</p>
           </div>
           <nav aria-label="Main Navigation">
             <ul className="flex gap-6 text-sm font-semibold">

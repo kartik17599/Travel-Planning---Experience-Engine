@@ -1,5 +1,10 @@
-import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+import createDOMPurify from 'dompurify';
 import { MAX_INPUT_LENGTH } from './constants';
+
+// Initialize DOMPurify for both browser and Node environments
+const domWindow = typeof window !== 'undefined' ? window : (new JSDOM('')).window;
+const DOMPurify = createDOMPurify(domWindow as unknown as Window);
 
 /**
  * Sanitizes user input to prevent XSS and limit length.
@@ -10,9 +15,8 @@ import { MAX_INPUT_LENGTH } from './constants';
  * // returns 'Hello'
  */
 export const sanitize = (input: string): string => {
-  const trimmed = input.trim();
-  const sanitized = DOMPurify.sanitize(trimmed);
-  return sanitized.substring(0, MAX_INPUT_LENGTH);
+  const sanitized = DOMPurify.sanitize(input.trim());
+  return sanitized.trim().substring(0, MAX_INPUT_LENGTH);
 };
 
 /**
