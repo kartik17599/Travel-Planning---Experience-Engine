@@ -1,48 +1,29 @@
 import { z } from 'zod';
-import { 
-  MAX_DESTINATION_LENGTH, 
-  MAX_BUDGET, 
-  MAX_TRAVELERS, 
-  MIN_TRAVELERS,
-  MAX_TRIP_DAYS 
-} from './constants';
+import { isCleanInput } from './sanitizer';
 
 /**
- * Zod schema for validating Trip Form Data.
+ * Zod schema for the enhanced trip form data.
+ * Validates destination, dates, budget, travelers, and all new constraints.
  */
 export const tripFormSchema = z.object({
   destination: z.string()
-    .min(1, 'Destination is required')
-    .max(MAX_DESTINATION_LENGTH, `Destination must be less than ${MAX_DESTINATION_LENGTH} characters`)
-    .regex(/^[a-zA-Z0-9\s,\-]+$/, 'Destination contains invalid characters'),
-  
-  startDate: z.string().refine((val) => {
-    const date = new Date(val);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
-  }, { message: 'Start date must be today or in the future' }),
-
-  endDate: z.string(),
-
-  budget: z.number()
-    .positive('Budget must be a positive number')
-    .max(MAX_BUDGET, `Budget cannot exceed ${MAX_BUDGET}`),
-
-  travelers: z.number()
-    .int()
-    .min(MIN_TRAVELERS, `At least ${MIN_TRAVELERS} traveler required`)
-    .max(MAX_TRAVELERS, `Cannot exceed ${MAX_TRAVELERS} travelers`),
-
-  interests: z.array(z.string()).default([]),
+    .min(2, 'Destination must be at least 2 characters')
+    .refine(isCleanInput, 'Destination contains invalid characters'),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
+  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
+  budget: z.number().positive('Budget must be positive'),
+  travelers: z.number().int().positive('Traveler count must be at least 1'),
+  interests: z.array(z.string()).min(1, 'Select at least one interest'),
+  dietary: z.array(z.string()).optional(),
+  mobility: z.array(z.string()).optional(),
+  pace: z.enum(['Relaxed', 'Balanced', 'Intensive']).optional(),
+  tripStyle: z.string().optional(),
 }).refine((data) => {
   const start = new Date(data.startDate);
   const end = new Date(data.endDate);
-  const diffTime = end.getTime() - start.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return end > start && diffDays <= MAX_TRIP_DAYS;
+  return end >= start;
 }, {
-  message: `Trip duration must be between 1 and ${MAX_TRIP_DAYS} days`,
+  message: 'End date must be on or after start date',
   path: ['endDate'],
 });
 

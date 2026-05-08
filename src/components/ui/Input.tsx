@@ -10,10 +10,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 /**
  * Accessible Input component with label and error state.
  * @param {InputProps} props - Component properties
- * @returns {JSX.Element} - Rendered input
+ * @returns {React.JSX.Element} - Rendered input
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className, id, ...props }, ref): JSX.Element => {
+  ({ label, error, className, id, ...props }, ref): React.JSX.Element => {
     const inputId = id ?? label.toLowerCase().replace(/\s+/g, '-');
     const errorId = `${inputId}-error`;
 

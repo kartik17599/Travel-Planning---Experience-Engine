@@ -3,7 +3,8 @@ import { clsx } from 'clsx';
 import styles from './Button.module.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -12,23 +13,25 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 /**
  * Accessible Button component with support for variants and icons.
  * @param {ButtonProps} props - Component properties
- * @returns {JSX.Element} - Rendered button
+ * @returns {React.JSX.Element} - Rendered button
  */
 export const Button = ({
   children,
   className,
   variant = 'primary',
+  size = 'md',
   isLoading = false,
   leftIcon,
   rightIcon,
   disabled,
   ...props
-}: ButtonProps): JSX.Element => {
+}: ButtonProps): React.JSX.Element => {
   return (
     <button
       className={clsx(
         styles.button,
         styles[variant],
+        styles[size],
         className
       )}
       disabled={disabled || isLoading}
@@ -36,12 +39,12 @@ export const Button = ({
       {...props}
     >
       {isLoading ? (
-        <span role="status" aria-label="Loading">...</span>
+        <span className={styles.spinner} role="status" aria-label="Loading" />
       ) : (
         <>
-          {leftIcon && <span aria-hidden="true">{leftIcon}</span>}
+          {leftIcon && <span className={styles.icon} aria-hidden="true">{leftIcon}</span>}
           {children}
-          {rightIcon && <span aria-hidden="true">{rightIcon}</span>}
+          {rightIcon && <span className={styles.icon} aria-hidden="true">{rightIcon}</span>}
         </>
       )}
     </button>

@@ -2,11 +2,11 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' maps.googleapis.com;
+    script-src 'self' maps.googleapis.com 'unsafe-inline' 'unsafe-eval';
     style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-    img-src 'self' blob: data: maps.gstatic.com *.googleapis.com;
+    img-src 'self' blob: data: maps.gstatic.com *.googleapis.com maps.googleapis.com;
     font-src 'self' fonts.gstatic.com;
-    connect-src 'self' maps.googleapis.com api.anthropic.com;
+    connect-src 'self' maps.googleapis.com api.anthropic.com *.googleapis.com;
     worker-src 'self' blob:;
     frame-src 'self';
     object-src 'none';

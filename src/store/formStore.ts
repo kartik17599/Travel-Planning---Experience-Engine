@@ -17,6 +17,10 @@ const initialFormData: TripFormData = {
   budget: 1000,
   travelers: 1,
   interests: [],
+  dietary: [],
+  mobility: [],
+  pace: 'Balanced',
+  tripStyle: 'Boutique Hotel',
 };
 
 /**
@@ -25,14 +29,21 @@ const initialFormData: TripFormData = {
 export const useFormStore = create<FormState>((set) => ({
   formData: initialFormData,
   step: 1,
-  
-  setFormData: (data) => set((state) => ({
-    formData: { ...state.formData, ...data }
+
+  setFormData: (data) => set((state) => ({ 
+    formData: { ...state.formData, ...data } 
   })),
 
-  nextStep: () => set((state) => ({ step: state.step + 1 })),
-  
-  prevStep: () => set((state) => ({ step: Math.max(1, state.step - 1) })),
+  nextStep: () => set((state) => ({ 
+    step: Math.min(state.step + 4, 4) // Increased steps to 4
+  })),
 
-  resetForm: () => set({ formData: initialFormData, step: 1 }),
+  prevStep: () => set((state) => ({ 
+    step: Math.max(state.step - 1, 1) 
+  })),
+
+  resetForm: () => set({ 
+    formData: initialFormData, 
+    step: 1 
+  }),
 }));

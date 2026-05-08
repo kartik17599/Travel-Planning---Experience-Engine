@@ -12,9 +12,9 @@ const MapView = React.lazy(() => import('@/components/features/MapView').then(mo
  * Features a responsive layout with form, itinerary, and interactive map.
  * @returns {JSX.Element} - Rendered page
  */
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-screen bg-background">
       {/* Skip to content for accessibility */}
       <a 
         href="#main-content" 

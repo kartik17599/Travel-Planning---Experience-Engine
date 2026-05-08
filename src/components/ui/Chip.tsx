@@ -11,9 +11,9 @@ interface ChipProps {
 /**
  * Accessible Chip component for selecting interests.
  * @param {ChipProps} props - Component properties
- * @returns {JSX.Element} - Rendered chip
+ * @returns {React.JSX.Element} - Rendered chip
  */
-export const Chip = ({ label, selected = false, onClick }: ChipProps): JSX.Element => {
+export const Chip = ({ label, selected = false, onClick }: ChipProps): React.JSX.Element => {
   return (
     <button
       type="button"
