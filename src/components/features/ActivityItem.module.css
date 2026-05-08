@@ -1,218 +1,113 @@
 .card {
-  display: flex;
-  gap: 3rem;
-  padding: 3rem;
-  background: #ffffff;
-  border: 1px solid #f1f5f9;
-  border-radius: 28px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  border: 0.5px solid var(--w10);
+  border-radius: var(--r);
+  padding: 16px;
+  transition: all 0.2s ease;
 }
 
 .card:hover {
-  background: #ffffff;
-  border-color: var(--category-color);
-  transform: scale(1.02) translateY(-8px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--category-color);
-  opacity: 0.8;
-}
-
-.timeBadge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.3rem 0.8rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #e8b86d;
-  letter-spacing: 0.05em;
-}
-
-.iconWrapper {
-  width: 54px;
-  height: 54px;
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1.5rem;
-  transition: transform 0.3s ease;
-}
-
-.content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--w20);
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.25rem;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.iconContainer {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.titleArea {
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.time, .duration {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--w40);
+}
+
+.dot {
+  color: var(--w20);
+  font-size: 10px;
 }
 
 .title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.35rem;
+  font-family: var(--sans);
+  font-size: 15px;
   font-weight: 500;
-  color: #0c1a2e;
-  line-height: 1.2;
+  color: var(--w100);
+  line-height: 1.3;
 }
 
-.duration {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #9ca3af;
-  text-transform: uppercase;
-  margin-top: 0.4rem;
-}
-
-.location {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #e8b86d;
-  margin-bottom: 1.25rem;
-  opacity: 0.8;
-}
-
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.tagGroup {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.tag {
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  background: #f9fafb;
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.4rem;
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
-}
-
-.tipsContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.tip {
-  font-size: 0.9rem;
+.description {
+  font-size: 13px;
   line-height: 1.6;
-  color: #4b5563;
-}
-
-.tipLabel {
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #e8b86d;
-  display: block;
-  margin-bottom: 0.2rem;
-}
-
-.accessibility {
-  font-size: 0.8rem;
-  color: #6b7280;
-  padding: 0.6rem 0.8rem;
-  background: #f9fafb;
-  border-radius: 0.75rem;
-  border-left: 2px solid #e8b86d;
+  color: var(--w70);
+  margin-bottom: 16px;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: auto;
+  align-items: flex-end;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--w10);
 }
 
-.costInfo {
+.priceArea {
   display: flex;
   flex-direction: column;
 }
 
-.costLocal {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #0c1a2e;
-}
-
-.costUsd {
-  font-size: 0.7rem;
+.priceLabel {
+  font-size: 9px;
   font-weight: 500;
-  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--w20);
+  margin-bottom: 2px;
 }
 
-.actions {
-  display: flex;
-  gap: 0.6rem;
+.price {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--gold2);
 }
 
-.bookingBtn, .mapsBtn {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.6rem 1.15rem;
-  border-radius: 0.75rem;
+.mapLink {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gold2);
   text-decoration: none;
-  transition: all 0.2s ease;
-  min-width: 90px;
-  text-align: center;
+  padding: 4px 10px;
+  border: 0.5px solid var(--gold2);
+  border-radius: 99px;
+  transition: all 0.2s;
 }
 
-.bookingBtn {
-  background: linear-gradient(135deg, #c9922a, #e8b86d);
-  color: #fff;
-}
-
-.mapsBtn {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bookingBtn:hover {
-  transform: translateY(-1px);
-  opacity: 0.92;
-}
-
-.mapsBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #e8b86d;
-  color: #e8b86d;
-}
-
-@media (max-width: 640px) {
-  .card {
-    flex-direction: column;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
+.mapLink:hover {
+  background: rgba(232, 184, 109, 0.1);
+  box-shadow: 0 0 10px rgba(232, 184, 109, 0.1);
 }
