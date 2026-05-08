@@ -45,6 +45,7 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
+  output: 'standalone',
 };
 
 export default nextConfig;
