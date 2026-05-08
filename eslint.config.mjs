@@ -5,6 +5,30 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    plugins: {
+      jsdoc: (await import("eslint-plugin-jsdoc")).default,
+    },
+    rules: {
+      "complexity": ["error", 10],
+      "max-lines-per-function": ["error", { "max": 40, "skipBlankLines": true, "skipComments": true }],
+      "jsdoc/require-jsdoc": [
+        "error",
+        {
+          "publicOnly": true,
+          "require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true,
+            "ArrowFunctionExpression": true,
+            "FunctionExpression": true
+          }
+        }
+      ],
+      "jsdoc/require-param": "error",
+      "jsdoc/require-returns": "error",
+    }
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
