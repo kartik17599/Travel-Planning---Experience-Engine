@@ -5,7 +5,7 @@ import styles from './Chip.module.css';
 interface ChipProps {
   label: string;
   selected?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 /**
@@ -17,11 +17,19 @@ export const Chip = ({ label, selected = false, onClick }: ChipProps): React.JSX
   return (
     <button
       type="button"
-      className={clsx(styles.chip, selected && styles.selected)}
-      aria-pressed={selected}
+      className={clsx(
+        styles.chip,
+        selected && styles.selected
+      )}
       onClick={onClick}
+      aria-pressed={selected}
     >
       {label}
+      {selected && (
+        <span className={styles.check} aria-hidden="true">
+          ✓
+        </span>
+      )}
     </button>
   );
 };

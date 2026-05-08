@@ -18,16 +18,17 @@ export const metadata: Metadata = {
 /**
  * Root layout component for TravelAI.
  * @param {Readonly<{ children: React.ReactNode }>} props - Component properties
- * @returns {JSX.Element} - Rendered layout
+ * @returns {React.JSX.Element} - Rendered layout
  */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.JSX.Element {
   return (
     <html lang="en" className={`${inter.variable}`}>
       <body className="antialiased">
+        <div className="mesh-bg" aria-hidden="true" />
         {children}
       </body>
     </html>

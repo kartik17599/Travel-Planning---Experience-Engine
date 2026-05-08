@@ -1,31 +1,37 @@
 .chip {
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.15rem;
+  border-radius: 99px;
+  font-size: 11px;
   font-weight: 500;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .chip:hover {
-  background-color: var(--border);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .selected {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  border-color: var(--primary);
+  background: rgba(201, 146, 42, 0.2);
+  color: #e8b86d;
+  border-color: #e8b86d;
+  box-shadow: 0 4px 12px rgba(201, 146, 42, 0.1);
 }
 
 .selected:hover {
-  filter: brightness(1.1);
+  background: rgba(201, 146, 42, 0.3);
 }
 
-.chip:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
+.check {
+  font-size: 0.7rem;
+  opacity: 0.8;
 }

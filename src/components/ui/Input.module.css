@@ -1,39 +1,77 @@
-.inputContainer {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   width: 100%;
 }
 
-.label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--secondary-foreground);
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input {
-  background-color: var(--input);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--foreground);
-  min-height: 44px;
-  padding: 0 0.75rem;
-  transition: border-color 0.2s ease, ring 0.2s ease;
   width: 100%;
+  padding: 18px 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.input:hover {
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-sm);
 }
 
 .input:focus {
-  outline: none;
-  border-color: var(--ring);
-  box-shadow: 0 0 0 2px var(--ring);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(63, 81, 181, 0.1);
 }
 
-.errorText {
-  color: var(--error);
+.label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  background: white;
+  padding: 0 6px;
+  margin-left: -4px;
+}
+
+/* Aesthetic Material Outlined Label */
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  top: 0;
   font-size: 0.75rem;
-  margin-top: 0.25rem;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .inputError {
-  border-color: var(--error);
+  border-color: #ef4444 !important;
+}
+
+.inputError + .label {
+  color: #ef4444 !important;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 6px;
+  font-weight: 600;
+  padding-left: 4px;
 }
