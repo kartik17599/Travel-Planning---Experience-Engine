@@ -25,14 +25,25 @@ export default function Home(): React.JSX.Element {
 
       <div className="container-main relative z-10">
         {/* 4. Navigation Bar */}
-        <nav className="fixed top-0 left-0 w-full z-[100] flex items-center justify-between px-7 py-5 border-b border-white/10 backdrop-blur-md" role="navigation" aria-label="Main navigation">
-          <div className="flex items-center">
-            <div className="w-[34px] h-[34px] rounded-[10px] bg-gradient-to-br from-gold to-gold2 flex items-center justify-center font-serif text-[18px] text-white">
-              T
+        <nav className="fixed top-0 left-0 w-full z-[100] flex items-center justify-between px-10 py-6 border-b border-white/5 backdrop-blur-xl bg-navy/30" role="navigation" aria-label="Main navigation">
+          <div className="flex items-center gap-5">
+            <div className="relative group cursor-pointer">
+              <div className="w-[42px] h-[42px] rounded-xl bg-gradient-to-br from-gold/20 to-gold2/10 border border-gold2/30 flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/travelai_formal_logo_1778230209071.png" 
+                  alt="TravelAI Formal Logo" 
+                  className="w-full h-full object-cover mix-blend-screen opacity-90 group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="absolute -inset-2 bg-gold2/5 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <div className="ml-[10px]">
-              <span className="font-serif text-[22px] font-medium text-w100 leading-none block">TravelAI</span>
-              <span className="text-[10px] text-gold2 uppercase tracking-[0.1em] font-medium">Premium Travel Engine</span>
+            
+            <div className="flex flex-col">
+              <h1 className="font-serif text-[24px] font-medium text-w100 leading-none tracking-tight">TravelAI</h1>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="w-4 h-[1px] bg-gold2/50" />
+                <span className="text-[9px] text-gold2 uppercase tracking-[0.2em] font-medium">Premium Travel Engine</span>
+              </div>
             </div>
           </div>
           
